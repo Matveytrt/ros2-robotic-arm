@@ -1,0 +1,15 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+
+# CAD и бинарники: не сравнивать построчно
+*.step binary
+*.stp binary
+*.stl binary
+*.dxf -diff
+*.pdf binary
+*.png binary
+*.jpg binary
+*.SLDPRT binary
+*.SLDASM binary
+*.SLDDRW binary

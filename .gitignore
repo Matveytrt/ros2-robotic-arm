@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# SolidWorks: временные и lock-файлы
+~$*
+*.SLDBAK
+*.swbak
+*.bak
+
+# Системное
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ROS2 / colcon (на будущее)
+build/
+install/
+log/
