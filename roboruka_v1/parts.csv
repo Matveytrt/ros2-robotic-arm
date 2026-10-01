@@ -1,0 +1,22 @@
+pid;name;module;status;thickness;qty;note
+01;01_osnovanie_niz;M1_osnovanie;gen;5;1;Основание нижнее
+02;02_plita_dvigatelya;M1_osnovanie;gen;5;1;Плита двигателя (верх основания)
+03;03_kolco_nizhnee;M1_osnovanie;gen;5;1;Кольцо-центратор нижнее (51106)
+04;04_povorotny_stol;M2_platforma;gen;5;1;Поворотный стол
+05;05_kolco_verhnee;M2_platforma;gen;5;1;Кольцо-центратор верхнее (резьба M3 метчиком)
+06;06_stoyka_levaya;M2_platforma;gen;5;1;Стойка левая (MG996R плеча)
+07;07_stoyka_pravaya;M2_platforma;gen;5;1;Стойка правая (ось M4)
+08;08_peremychka;M2_platforma;gen;5;1;Задняя перемычка стоек
+09;09_plecho_levoe;M3_plecho;gen;5;1;Плечо левое (на качалке MG996R плеча)
+10;10_plecho_pravoe;M3_plecho;gen;5;1;Плечо правое (MG996R локтя)
+11;11_predplechye_levoe;M4_predplechye;gen;3;1;Предплечье левое (MG90S наклона)
+12;12_predplechye_pravoe;M4_predplechye;gen;3;1;Предплечье правое (на качалке локтя)
+13;13_kist_A;M5_kist;gen;3;1;Кисть A (на качалке наклона)
+14;14_kist_B;M5_kist;gen;3;1;Кисть B (на оси)
+15;15_kist_plita;M5_kist;gen;3;1;Плита сервы вращения
+16;16_kleshnya_zad;M6_kleshnya;gen;3;1;Задняя плита клешни (на качалке вращения)
+17;17_ladon;M6_kleshnya;gen;3;1;Ладонь клешни
+18;18_shesternya_R;M6_kleshnya;gen;3;1;Шестерня-рычаг R ведущая (на качалке)
+19;19_shesternya_L;M6_kleshnya;gen;3;1;Шестерня-рычаг L ведомая
+20;20_povodok;M6_kleshnya;gen;3;2;Поводок (левый = правый)
+21;21_palec;M6_kleshnya;gen;3;4;Палец (4 одинаковых, левые перевёрнуты)

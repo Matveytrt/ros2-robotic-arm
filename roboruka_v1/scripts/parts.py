@@ -1,5 +1,5 @@
 """Все детали из оргстекла как плоские заготовки: локальная XY = контур, Z = толщина (0…t)."""
-import math
+import math, os, csv
 import numpy as np
 from lib import *
 
@@ -460,7 +460,7 @@ def p25_finger():
 
 
 # ================= список =================
-def build_parts():
+def _all_parts():
     return [
         Part("01", "osnovanie_niz", "Основание нижнее", T5, p01_bottom()),
         Part("02", "plita_dvigatelya", "Плита двигателя (верх основания)", T5, p02_top()),
@@ -484,3 +484,33 @@ def build_parts():
         Part("20", "povodok", "Поводок (левый = правый)", T3, p24_link(), qty=2),
         Part("21", "palec", "Палец (4 одинаковых, левые перевёрнуты)", T3, p25_finger(), qty=4),
     ]
+
+
+# ================= детали manual берём из STEP, который сохранил SolidWorks =================
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))   # папка roboruka_v1
+
+
+def part_status():
+    """parts.csv: pid;name;module;status;note. status = gen (геометрию строит Python) | manual (правишь в SolidWorks)."""
+    st = {}
+    path = os.path.join(ROOT, "parts.csv")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            for row in csv.DictReader(fh, delimiter=";"):
+                st[row["pid"].strip()] = row
+    return st
+
+
+def build_parts():
+    parts = _all_parts()
+    st = part_status()
+    for p in parts:
+        row = st.get(p.pid)
+        p.status = row["status"].strip() if row else "gen"
+        p.module = row["module"].strip() if row else ""
+        if p.status == "manual":
+            step = os.path.join(ROOT, "step_detali", p.fname + ".step")
+            if not os.path.exists(step):
+                raise FileNotFoundError(f"{p.fname}: статус manual, но нет {step}. Запусти ExportAll в SolidWorks.")
+            p.solid = cq.importers.importStep(step)
+    return parts
