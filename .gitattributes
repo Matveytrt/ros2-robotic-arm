@@ -13,3 +13,10 @@
 *.SLDPRT binary
 *.SLDASM binary
 *.SLDDRW binary
+
+# SolidWorks читает эти файлы в Windows-формате (CRLF, .bas в cp1251)
+*.bas text eol=crlf
+*.swb text eol=crlf
+roboruka_v1/solidworks/data/*.txt text eol=crlf
+roboruka_v1/solidworks/params.txt text eol=crlf
+*.swp binary
