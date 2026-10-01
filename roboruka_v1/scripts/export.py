@@ -65,23 +65,6 @@ def nest(thick, width=300.0, gap=4.0):
 sheets = {T3: nest(T3, 300.0), T5: nest(T5, 400.0)}
 print("sheets", sheets)
 
-# ---------- модули (подсборки) ----------
-HW_MODULE = [("NEMA17", "M1"), ("51106", "M1"), ("stoyka_M3x45", "M1"), ("mufta", "M2"), ("MG996R_plecho", "M2"),
-             ("kachalka_plecho", "M2"), ("os_M4", "M2"), ("MG996R_lokot", "M3"), ("kachalka_lokot", "M3"),
-             ("stoyka_M3x41", "M3"), ("stoyka_M3x25", "M4"), ("MG90S_naklon", "M4"), ("kachalka_naklon", "M5"),
-             ("MG90S_vrashenie", "M5"), ("kachalka_vrashenie", "M6"), ("MG90S_zahvat", "M6"), ("kachalka_zahvat", "M6"),
-             ("stoyka_M3x8", "M6")]
-
-
-def module_of(name):
-    if name[:2].isdigit() and PD.get(name[:2]) is not None:
-        return getattr(PD[name[:2]], "module", "")[:2]
-    for pre, m in HW_MODULE:
-        if name.startswith(pre):
-            return m
-    return ""
-
-
 # ---------- сборки STEP ----------
 for tag, pose in (("HOME", HOME), ("WORK", WORK)):
     items, info = build(pose, PD)
@@ -93,20 +76,6 @@ for tag, pose in (("HOME", HOME), ("WORK", WORK)):
         s = s.rotate(cq.Vector(0, 0, 0), cq.Vector(1, 0, 0), -90)   # в SolidWorks «вверх» = +Y
         asm.add(cq.Workplane().add(s), name=nm, color=cq.Color(*COL[c]))
     asm.save(os.path.join(OUT, "sborka", f"roboruka_sborka_{tag}.step"))
-    if tag == "HOME":                     # подсборки модулей M1…M6 в общей системе координат
-        mods = collections.defaultdict(list)
-        for n, s, c in items:
-            mods[module_of(n)].append((n, s, c))
-        for m, its in sorted(mods.items()):
-            if not m:
-                continue
-            sub = cq.Assembly(name=f"modul_{m}")
-            used = collections.Counter()
-            for n, s, c in its:
-                used[n] += 1
-                s = s.rotate(cq.Vector(0, 0, 0), cq.Vector(1, 0, 0), -90)
-                sub.add(cq.Workplane().add(s), name=n if used[n] == 1 else f"{n}_{used[n]}", color=cq.Color(*COL[c]))
-            sub.save(os.path.join(OUT, "sborka", f"modul_{m}.step"))
 print("asm ok")
 
 
